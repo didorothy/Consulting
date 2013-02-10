@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<style>
+		body { font-family: "Times New Roman", Times, serif; font-size: 12px; }
+		h1 { font-size: 2em; font-weight: bold; }
+		hr { border: none; outline: none; border-bottom: 1px solid #000; }
+		
+		.center { text-align: center; }
+		.left { text-align: left; }
+		.right { text-align: right; }
+	</style>
+</head>
+<body>
+	<h1>Invoice</h1>
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td style="text-align: left;">
+				{% for line in invoice_address %}
+				{{ line }}{% if not forloop.last %}<br/>{% endif %}
+				{% endfor %}
+			</td>
+			<td style="text-align: right;">
+				<strong>Invoice #{{ object.invoice_number }}</strong><br/>
+				<br/>
+				{{ object.invoice_date|date:'M. j, Y }}
+			</td>
+		</tr>
+	</table>
+	
+	<hr/>
+	
+	<div>
+		<strong>Bill To:</strong>
+		{{ object.customer.name }}<br/>
+		{{ object.customer.address1 }}<br/>
+		{{ object.customer.address2 }}<br/>
+		{{ object.customer.city }}, {{ object.customer.state }} {{ object.customer. zip }}
+	</div>
+	
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<th>Description</th>
+			<th class="center">Quantity</th>
+			<th class="right">Price</th>
+			<th class="right">Sub-Total</th>
+		</tr>
+		{% for item in object.invoicelineitem_set.all() %}
+		<tr>
+			<td>{{ item.description }}</td>
+			<td class="center">{{ item.quantity }}</td>
+			<td class="right">{{ item.price }}</td>
+			<td class="right">{{ item.total }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td colspan="3" class="right"><strong>Total</strong></td>
+			<td>{{ object.total }}</td>
+		</tr>
+	</table>
+	
+	<div class="footer">
+		Please remit payment within 30 days of the date of invoice. Thank-you for your business.
+	</div>
+</body>
+</html>
