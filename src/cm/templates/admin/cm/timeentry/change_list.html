@@ -1,0 +1,22 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load admin_urls %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+.vLargeTextField { width: 98%; }
+</style>
+{% endblock %}
+
+{% block object-tools-items %}
+{% if not is_popup %}
+<li>
+    <a href="{% url cl.opts|admin_urlname:'preview_invoice' %}" class="link">
+    {% trans "Preview Invoice" %}
+    </a>
+</li>
+{% endif %}
+{{ block.super }}
+{% endblock %}
