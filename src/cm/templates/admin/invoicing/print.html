@@ -46,7 +46,7 @@
 			<th class="right">Price</th>
 			<th class="right">Sub-Total</th>
 		</tr>
-		{% for item in object.invoicelineitem_set.all() %}
+		{% for item in object.invoicelineitem_set.all %}
 		<tr>
 			<td>{{ item.description }}</td>
 			<td class="center">{{ item.quantity }}</td>
