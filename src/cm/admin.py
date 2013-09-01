@@ -95,7 +95,7 @@ class TimeEntryAdmin(admin.ModelAdmin):
                 if customer != entry.project.customer:
                     continue
                 
-                if cur_project is None and cur_project != entry.project:
+                if cur_project is None or cur_project != entry.project:
                     if cur_item is not None:
                         back_refs.append((cur_item, cur_list))
                     cur_list = []
