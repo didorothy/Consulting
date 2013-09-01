@@ -3,17 +3,26 @@
 <head>
 	<title></title>
 	<style>
-		body { font-family: "Times New Roman", Times, serif; font-size: 12px; }
-		h1 { font-size: 2em; font-weight: bold; }
+		body { font-family: "Times New Roman", Times, serif; font-size: 12pt; }
+		h1 { font-size: 16pt; font-weight: bold; text-align: center; }
 		hr { border: none; outline: none; border-bottom: 1px solid #000; }
 		
 		.center { text-align: center; }
 		.left { text-align: left; }
 		.right { text-align: right; }
+		
+		table.detail-listing { border-right: 1px solid #000; margin-top: 12px; width: 100%; margin-top: 12px; }
+		.detail-listing th { background: #000; color: #FFF; padding: 4px; }
+		.detail-listing td { border-left: 1px solid #000; padding: 4px; }
+		.detail-listing .totals td { border-top: 1px solid #000; border-left: none; }
+		.detail-listing .totals .total { border-left: 1px solid #000; border-bottom: 1px solid #000; font-weight: bold;  }
+		.detail-listing .description { width: 70%; }
+		
+		.footer { margin-top: 20px; text-align: center; }
 	</style>
 </head>
 <body>
-	<h1>Invoice</h1>
+	<h1>INVOICE</h1>
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr>
 			<td style="text-align: left;">
@@ -32,31 +41,31 @@
 	<hr/>
 	
 	<div>
-		<strong>Bill To:</strong>
+		<strong>Bill To:</strong><br/>
 		{{ object.customer.name }}<br/>
 		{{ object.customer.address1 }}<br/>
 		{{ object.customer.address2 }}<br/>
 		{{ object.customer.city }}, {{ object.customer.state }} {{ object.customer.postal_code }}
 	</div>
 	
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="detail-listing">
 		<tr>
-			<th>Description</th>
+			<th class="left description">Description</th>
 			<th class="center">Quantity</th>
-			<th class="right">Price</th>
+			<th class="right">Rate</th>
 			<th class="right">Sub-Total</th>
 		</tr>
 		{% for item in object.invoicelineitem_set.all %}
 		<tr>
-			<td>{{ item.description }}</td>
+			<td class="left">{{ item.description }}</td>
 			<td class="center">{{ item.quantity }}</td>
 			<td class="right">{{ item.price }}</td>
 			<td class="right">{{ item.total }}</td>
 		</tr>
 		{% endfor %}
-		<tr>
+		<tr class="totals">
 			<td colspan="3" class="right"><strong>Total</strong></td>
-			<td>{{ object.total }}</td>
+			<td class="total right">{{ object.total }}</td>
 		</tr>
 	</table>
 	

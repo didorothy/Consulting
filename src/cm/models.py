@@ -64,6 +64,14 @@ class Project(models.Model):
         for timeentry in self.timeentry_set.all():
             total += timeentry.time_spent()
         return total
+    
+    def time_invoiced(self):
+        entries = self.timeentry_set.all()
+        line_items = [e.invoice_line_item for e in entries if e.invoice_line_item]
+        total_quantity = Decimal(0)
+        for item in line_items:
+            total_quantity += item.quantity
+        return total_quantity
 
 
 class TimeEntry(models.Model):
